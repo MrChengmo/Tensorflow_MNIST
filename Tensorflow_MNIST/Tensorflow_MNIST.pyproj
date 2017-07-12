@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>b3c3f73d-eb77-43cf-b630-385fb14896e8</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>mnist_inference.py</StartupFile>
+    <StartupFile>mnist_train.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
