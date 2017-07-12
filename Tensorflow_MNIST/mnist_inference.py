@@ -17,7 +17,7 @@ def get_weight_variable(shape,regularizer):
   #这是自定义集合，不在tensorflow自动管理的集合列表中
     if regularizer != None:
         tf.add_to_collection('losses',regularizer(weights))
-    return(weights)
+    return weights
 
 #定义神经网络的前向传播过程
 def inference(input_tensor,regularizer):
@@ -33,9 +33,9 @@ def inference(input_tensor,regularizer):
     #声明第二层网络的变量并完成前向传播
     with tf.variable_scope('layer2'):
         weights = get_weight_variable(
-            [INPUT_NODE,LAYER1_NODE],regularizer)
+            [LAYER1_NODE,OUTPUT_NODE],regularizer)
         biases = tf.get_variable(
-            "biases",[LAYER1_NODE],
+            "biases",[OUTPUT_NODE],
             initializer = tf.constant_initializer(0.0))
-        layer2 = tf.nn.relu(tf.matmul(input_tensor,weights)+biases)
-    return(layer2)   
+        layer2 = tf.matmul(layer1,weights)+biases
+    return layer2   

@@ -4,6 +4,7 @@ import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 import mnist_inference
 
+
 BATCH_SIZE = 100
 LEARNING_RATE_BASE = 0.8
 LEARNING_RATE_DECAY = 0.99
@@ -41,9 +42,10 @@ def train(mnist):
         LEARNING_RATE_BASE,
         global_step,
         mnist.train.num_examples/BATCH_SIZE,
-        LEARNING_RATE_DECAY)
+        LEARNING_RATE_DECAY,
+        staircase = True)
     #定义训练轮数
-    training_step = tf.train.ProximalGradientDescentOptimizer(learning_rate).minimize(
+    training_step = tf.train.GradientDescentOptimizer(learning_rate).minimize(
         loss,global_step = global_step)
     with tf.control_dependencies([training_step,variable_averages_op]):
         train_op = tf.no_op(name = 'train')
@@ -62,7 +64,7 @@ def train(mnist):
                 #输出当前的训练情况，这里输出在当前训练batch上的损失函数大小
                 #通过损失函数可以大概了解训练情况
                 #在验证集上的正确率信息会单独程序完成。
-                print("After %d training step,loss on training"
+                print("After %d training step,loss on training "
                       "batch is %g"%(step,loss_vaule))
                 #保存当前的模型，这里加上了global_step的参数，可以让每个被保存模型的文件名末尾加上训练的轮数
                 saver.save(
